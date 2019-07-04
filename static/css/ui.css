@@ -1,0 +1,28 @@
+html, body, .container { margin: 0; padding: 0; max-width: 100%; height: 100%; }
+.row { width: 100%; padding: 0; margin: 0; }
+.border-right { border-right: 1px solid #ccc; }
+.nav { border-bottom: 1px solid #ccc; padding: 1rem; }
+.editor { height: calc(100% - 87px); }
+.filename { font-size: 4rem; }
+.filename input { max-width: 50%; border: 0; }
+.icon { float: right; margin-top: 2.2rem; margin-left: 1rem; cursor: default;  }
+#open { display: none; }
+#editor { width: 100%; height: 100%; font-size: 12pt; font-family: 'Fira Code', 'Consolas', monospace; }
+#preview-pane iframe { width: 100%; height: calc(100% - 5px); border: 0; margin: 0; overflow-y: scroll; }
+.split, .gutter.gutter-horizontal { float: left; background-color: #ccc; }
+.gutter.gutter-horizontal { cursor: ew-resize; }
+.glow {
+    display: none;
+    font-size: 4rem;
+    margin-left: 2rem;
+    color: #ff3800;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+.iconbar  { float: right; }
+
+@-webkit-keyframes glow {
+    from { text-shadow: 0 0 10px #dd3000, 0 0 20px #fff, 0 0 30px #aa310f, 0 0 40px #aa310f, 0 0 50px #aa310f, 0 0 60px #aa310f, 0 0 70px #aa310f; }
+    to { text-shadow: 0 0 20px #dd3000, 0 0 30px #f94816, 0 0 40px #f94816, 0 0 50px #f94816, 0 0 60px #f94816, 0 0 70px #f94816, 0 0 80px #f94816; }
+}

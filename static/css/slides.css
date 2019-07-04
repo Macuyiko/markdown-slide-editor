@@ -1,0 +1,186 @@
+body, html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+#container,
+.slide,
+.slide-wrapper {
+	box-sizing: border-box;
+}
+
+.slide-bg,
+.slide-page {
+	display: none;
+}
+
+body.slide-view {
+	page-break-inside: avoid;
+}
+
+body.slide-view #container {
+	padding: 0;
+}
+
+body.slide-view .slide-wrapper {
+	width: calc(1px * var(--slide-width));
+	height: calc(1px * var(--slide-height));
+	background: #fff;
+	position: relative;
+	overflow: hidden;
+	page-break-after: always;
+}
+
+body.slide-view .slide-wrapper>.slide {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	justify-content: flex-start;
+	box-sizing: border-box;
+	width: calc(1px * var(--slide-width));
+	height: calc(1px * var(--slide-height));
+	transform-origin: 0 0;
+}
+
+body.slide-view .slide-wrapper>.slide>.slide-inner {
+	position: relative;
+	z-index: 2;
+}
+
+body.slide-view .slide-wrapper>.slide>.slide-inner>:first-child,
+body.slide-view .slide-wrapper>.slide>.slide-inner>:first-child>:first-child {
+	margin-top: 0!important;
+}
+
+body.slide-view .slide-wrapper>.slide>.slide-inner>:last-child,
+body.slide-view .slide-wrapper>.slide>.slide-inner>:last-child>:last-child {
+	margin-bottom: 0!important;
+}
+
+body.slide-view .slide-wrapper .slide-page {
+	display: none;
+	position: absolute;
+	right: 30px;
+	bottom: 21px;
+	z-index: 10;
+	pointer-events: none;
+}
+
+body.slide-view .slide-wrapper[data-page-number=true] .slide-page {
+	display: block;
+}
+
+body.slide-view .slide-wrapper .slide-footer {
+	position: absolute;
+	left: 30px;
+	bottom: 21px;
+	z-index: 10;
+	pointer-events: none;
+}
+
+body.slide-view .slide-wrapper .slide-bg {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	z-index: 1;
+}
+
+body.slide-view .slide-wrapper .slide-bg .slide-bg-img {
+	flex: 1 1 auto;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	opacity: .4;
+}
+
+body.slide-view .slide-wrapper .slide-bg .slide-bg-img[data-alt~=fit] {
+	background-size: contain;
+}
+
+body.slide-view .slide-wrapper .slide-bg .slide-bg-img[data-alt~=original] {
+	opacity: 1;
+}
+
+body.slide-view .markdown-body img {
+	max-width: 100%;
+}
+
+body.slide-view .markdown-body img[alt~=center] {
+	display: block;
+	margin: 0 auto;
+}
+
+body.slide-view .markdown-body img[alt~=left] {
+	display: block;
+    float: left;
+    margin-right: 4em;
+}
+
+body.slide-view .markdown-body img[alt~=right] {
+	display: block;
+    float: right;
+    margin-left: 4em;
+}
+
+/* Print style */
+
+ @media print {
+	body .slide-wrapper {
+		max-height: 100vh;
+	}
+ }
+
+/* Display style */
+
+@media not print {
+	body.doc-view {
+		background: #fefefe;
+	}
+	body.doc-view #container {
+		padding: calc(1px * var(--preview-margin)) calc(1px * var(--preview-margin));
+	}
+
+	body.slide-view {
+		background: #202020;
+	}
+	body.slide-view .slide-wrapper {
+		width: calc(1px * (var(--screen-width) - var(--preview-margin) * 2));
+		height: calc((1px * (var(--screen-width) - var(--preview-margin) * 2)) * var(--slide-height) / var(--slide-width));
+		border: 1px solid #000;
+		box-shadow: 0 10px 30px #000;
+	}
+	body.slide-view .slide-wrapper>.slide {
+		transform: scale(calc((var(--screen-width) - var(--preview-margin) * 2) / var(--slide-width)));
+	}
+	body.slide-view.screen .slide-wrapper {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		display: none;
+	}
+	body.slide-view.screen #container.height-base .slide-wrapper {
+		width: calc((1px * (var(--screen-height) - var(--preview-margin) * 2)) * var(--slide-width) / var(--slide-height));
+		height: calc(1px * (var(--screen-height) - var(--preview-margin) * 2));
+	}
+	body.slide-view.screen #container.height-base .slide-wrapper>.slide {
+		transform: scale(calc((var(--screen-height) - var(--preview-margin) * 2) / var(--slide-height)));
+	}
+	body.slide-view.list #container {
+		padding: calc(1px * var(--preview-margin)) 0;
+	}
+	body.slide-view.list .slide-wrapper {
+		margin: calc(1px * var(--preview-margin)) auto 0!important;
+	}
+	body.slide-view.list .slide-wrapper:first-child {
+		margin-top: 0!important;
+	}
+}
+

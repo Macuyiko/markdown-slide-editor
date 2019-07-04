@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+        <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+        <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/ui.css') }}">
+
+        {{ JSGlue.include() }}
+        <script src="//code.jquery.com/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/mode-markdown.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//unpkg.com/hotkeys-js/dist/hotkeys.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ url_for('static', filename='js/ui.js') }}" type="text/javascript" charset="utf-8"></script>
+        
+        <title>Slide Editor</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row nav">
+                <div class="column">
+                    <span class="filename"><input type="text" name="filename" id="filename" value="new file.md" /></span>
+                    <span class="glow">•</span>
+                    
+                    <div class="iconbar">
+                        <span class="icon open">📂</span>
+                        <span class="icon save">💾</span>
+                        <span class="icon new">📄</span>
+                        <span class="icon print">🖨️</span>
+                        <span class="icon view">🔍</span>
+                        <span class="icon present">📺</span>
+                        <input type="file" name="open" id="open" />
+                    </div>
+                </div>
+            </div>
+            <div class="row editor">
+                <div class="split" id="editor-pane">
+                    <div id="editor"></div>
+                </div>
+                <div class="split" id="preview-pane">
+                    <iframe id="preview-frame" name="preview-frame" src="{{ url_for('preview') }}">
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
