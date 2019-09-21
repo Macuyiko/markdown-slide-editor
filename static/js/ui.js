@@ -105,7 +105,7 @@ function openPopup(urlPart, viewOverride) {
         data: { text: code },
         cache: false,
         success: function(data) {
-            var win = window.open("", "Print Output", 
+            var win = window.open("", "Slide Output", 
                 "toolbar=no,location=no,directories=no,status=no,menubar=no," +
                 "scrollbars=yes,resizable=yes,width=780,height=400," +
                 "top=" + (screen.height-400) + "," +
@@ -123,11 +123,11 @@ function openPopup(urlPart, viewOverride) {
 }
 
 function invokePrintView() {
-    openPopup('print');
+    openPopup('print_preview');
 }
 
 function invokePresenterView() {
-    openPopup('present', 'slide-view screen');
+    openPopup('present_preview', 'slide-view screen');
 }
 
 function invokeNewFile(skipRender) {
@@ -162,7 +162,8 @@ $(function() {
     editor.session.setMode("ace/mode/markdown");
     editor.setOptions({
         wrap: true,
-        indentedSoftWrap: false
+        indentedSoftWrap: false,
+        spellcheck: true
     });
 
     editor.getSession().on('change', function() {   invokeContentsUnsaved(true); });

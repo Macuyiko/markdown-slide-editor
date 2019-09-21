@@ -8,8 +8,9 @@
 
         {{ JSGlue.include() }}
         <script src="//code.jquery.com/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/mode-markdown.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-spellcheck.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-markdown.js" type="text/javascript" charset="utf-8"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="//unpkg.com/hotkeys-js/dist/hotkeys.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="{{ url_for('static', filename='js/ui.js') }}" type="text/javascript" charset="utf-8"></script>
@@ -36,7 +37,7 @@
             </div>
             <div class="row editor">
                 <div class="split" id="editor-pane">
-                    <div id="editor"></div>
+                    <div id="editor" contenteditable="true" spellcheck="true"></div>
                 </div>
                 <div class="split" id="preview-pane">
                     <iframe id="preview-frame" name="preview-frame" src="{{ url_for('preview') }}">

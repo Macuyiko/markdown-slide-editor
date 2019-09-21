@@ -3,8 +3,10 @@ from flask import render_template
 from flask import request
 from flask import jsonify
 from flask import url_for
+from flask import send_file
 from flask_jsglue import JSGlue
 from mdx.renderer import render_text_with_view
+from os import getcwd
 
 app = Flask(__name__)
 jsglue = JSGlue(app)
@@ -38,13 +40,17 @@ def preview(view=None, auto_print=False, auto_full=False):
 
 @app.route("/print", methods=['GET', 'POST'])
 @app.route("/print/<view>", methods=['GET', 'POST'])
-def print(view=None):
+def print_preview(view=None):
     return preview(view, auto_print=True)
 
 @app.route("/present", methods=['GET', 'POST'])
 @app.route("/present/<view>", methods=['GET', 'POST'])
-def present(view=None):
+def present_preview(view=None):
     return preview(view, auto_full=True)
+
+@app.route("/file/<path:location>")
+def file(location):
+    return send_file(getcwd() + '/' + location)
 
 @app.route("/render", methods=['POST'])
 def render():
