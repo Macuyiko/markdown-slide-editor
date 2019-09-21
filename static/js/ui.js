@@ -169,20 +169,20 @@ $(function() {
     $('#filename').on('change', function() {        invokeContentsUnsaved(true); });
 
     Split(['#editor-pane', '#preview-pane'], {
-        onDragEnd: function() {                     invokeResized();           }});
-    $(window).on('resize', function(){              invokeResized();           });
+        onDragEnd: function() {                     invokeResized();             }});
+    $(window).on('resize', function(){              invokeResized();             });
 
     $('#editor').on('keyup', function(){            invokeRender();              });
-    editor.selection.on('changeCursor', function(){ invokeCursorChanged();   });
+    editor.selection.on('changeCursor', function(){ invokeCursorChanged();       });
 
     $('#open').on('change', function(){             invokeOpenFile();            });
     
     $('.icon.new').on('click', function(){          invokeNewFile();             });
-    $('.icon.open').on('click', function(){         invokeOpenFileDialog();             });
+    $('.icon.open').on('click', function(){         invokeOpenFileDialog();      });
     $('.icon.save').on('click', function(){         invokeSaveFile();            });
     $('.icon.view').on('click', function(){         invokeToggleView();          });
     $('.icon.print').on('click', function(){        invokePrintView();           });   
-    $('.icon.present').on('click', function(){        invokePresenterView();           });
+    $('.icon.present').on('click', function(){      invokePresenterView();       });
 
     hotkeys('ctrl+l,ctrl+o,ctrl+s,ctrl+v,ctrl+p,f11', function(event, handler) {
         event.preventDefault();
