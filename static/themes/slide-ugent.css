@@ -86,7 +86,7 @@ div.figure.h100 {  height: 100%; }
 
 .markdown-body {
     font-family: 'Raleway', sans-serif;
-    line-height: 1.3;
+    line-height: 1.4;
     word-wrap: break-word;
     color: #111;
     letter-spacing: normal;
@@ -212,12 +212,18 @@ div.figure.h100 {  height: 100%; }
     line-height: 16pt;
 }
 
-.slide-wrapper ol>li,.slide-wrapper ul>li { margin:.6em 0; }
+.slide-wrapper ol>li,  .slide-wrapper ul>li { margin:.3em 0; }
 .slide-wrapper ol>li>p,.slide-wrapper ul>li>p { margin:0; }
 .slide-wrapper ul { font-size: 80% !important; }
-.slide-wrapper li { line-height: 1.0em !important; }
+.slide-wrapper p + ul { margin-top: -1em; }
+.slide-wrapper p + ol { margin-top: -1em; }
+.slide-wrapper li > ul { margin-top: .1em; }
+.slide-wrapper li > ol { margin-top: .1em; }
+.slide-wrapper li { line-height: 1.4em !important; }
 .slide-wrapper th { font-weight: normal !important; }
 .slide-wrapper ol { list-style-type:decimal; }
+
+.slide-wrapper table { font-size: 16pt; }
 
 .slide-wrapper blockquote {
     position:relative;
