@@ -6,10 +6,11 @@ from flask import url_for
 from flask import send_file
 from flask_jsglue import JSGlue
 from mdx.renderer import render_text_with_view
-from os import getcwd
+from os import getcwd, chdir
 
 app = Flask(__name__)
 jsglue = JSGlue(app)
+initial_directory = getcwd()
 
 @app.after_request
 def add_header(r):
@@ -18,6 +19,15 @@ def add_header(r):
     r.headers["Expires"] = "0"
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
+
+def handle_workdir(rendered):
+    work_dir = rendered.get('work_dir', None)
+    if work_dir:
+        print("Changing working directory to:", work_dir)
+        chdir(initial_directory + '/' + work_dir)
+    else:
+        print("Changing working directory to:", initial_directory)
+        chdir(initial_directory)
 
 @app.route("/")
 def home():
@@ -36,7 +46,9 @@ def save():
 @app.route("/preview/<view>", methods=['GET', 'POST'])
 def preview(view=None, auto_print=False, auto_full=False):
     text = request.form.get('text')
-    return render_template('preview.html', **render_text_with_view(text, view), auto_print=auto_print, auto_full=auto_full)
+    rendered = render_text_with_view(text, view)
+    handle_workdir(rendered)
+    return render_template('preview.html', **rendered, auto_print=auto_print, auto_full=auto_full)
 
 @app.route("/print", methods=['GET', 'POST'])
 @app.route("/print/<view>", methods=['GET', 'POST'])
@@ -57,7 +69,9 @@ def render():
     json = request.get_json()
     text = json.get('text')
     view = json.get('view')
-    return jsonify(render_text_with_view(text, view))
+    rendered = render_text_with_view(text, view)
+    handle_workdir(rendered)
+    return jsonify(rendered)
 
 if __name__ == '__main__':
     app.run(debug=True)

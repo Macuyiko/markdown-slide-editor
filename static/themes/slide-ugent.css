@@ -223,7 +223,7 @@ div.figure.h100 {  height: 100%; }
 .slide-wrapper th { font-weight: normal !important; }
 .slide-wrapper ol { list-style-type:decimal; }
 
-.slide-wrapper table { font-size: 16pt; }
+.slide-wrapper p + table { font-size: 16pt; }
 
 .slide-wrapper blockquote {
     position:relative;

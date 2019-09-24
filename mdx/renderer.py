@@ -46,6 +46,7 @@ def render_text_with_view(text=None, view=None, also_postprocess=True):
     meta = md.Meta
     slide_theme = get_meta_or_default(meta, 'slide-theme', 'default')
     code_theme  = get_meta_or_default(meta, 'code-theme', 'default')
+    working_directory = get_meta_or_default(meta, 'work-dir', '.')
     if text and also_postprocess:
         html = postprocess(html, meta, view)
     return {
@@ -53,7 +54,8 @@ def render_text_with_view(text=None, view=None, also_postprocess=True):
         'meta': meta,
         'view': view,
         'slide_theme': slide_theme,
-        'code_theme':  code_theme
+        'code_theme':  code_theme,
+        'work_dir': working_directory
     }
 
 def postprocess_pages(html, with_pages='allbutfirst', with_footer=''):
