@@ -121,20 +121,31 @@
 
     </script>
     <style type="text/css">
-    :root {
-        --slide-width: 1024;
-        --slide-height: 768;
-        --preview-margin: 20;
-        --screen-width: 600;
-        --screen-height: 480;
+    @media not print {
+        :root {
+            --slide-width: 1024;
+            --slide-height: 768;
+            --preview-margin: 20;
+            --screen-width: 600;
+            --screen-height: 480;
+        }
+        body.present {
+            --preview-margin: 0;
+        }
     }
-    body.present {
-        --preview-margin: 0;
-    }
+
     {% if 'slide-view' in view %}
+    /* 96dpi default in Chrome */
     @media print {
+        :root {
+            --slide-width: 1024;
+            --slide-height: 768;
+            --preview-margin: 0;
+            --screen-width: 600;
+            --screen-height: 480;
+        }
         @page {
-            size: 10.7in 7.5in;
+            size: 10.667in 8in;
             margin: 0;
             bleed: 0; 
         }
