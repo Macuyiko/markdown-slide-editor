@@ -8,6 +8,14 @@ function getFrame(name) {
     return window.frames[name];
 }
 
+function debounce(fn, duration) {
+    var timer;
+    return function() {
+        clearTimeout(timer);
+        timer = setTimeout(fn, duration);
+    }
+}
+
 function invokeRender() {
     var code = editor.getValue();
     currentRequest = $.ajax(Flask.url_for('render'), {
@@ -166,24 +174,24 @@ $(function() {
         spellcheck: true
     });
 
-    editor.getSession().on('change', function() {   invokeContentsUnsaved(true); });
-    $('#filename').on('change', function() {        invokeContentsUnsaved(true); });
+    editor.getSession().on('change', function() {   invokeContentsUnsaved(true);    });
+    $('#filename').on('change', function() {        invokeContentsUnsaved(true);    });
 
     Split(['#editor-pane', '#preview-pane'], {
-        onDragEnd: function() {                     invokeResized();             }});
-    $(window).on('resize', function(){              invokeResized();             });
+        onDragEnd: function() {                     invokeResized();                }});
+    $(window).on('resize', function(){              invokeResized();                });
 
-    $('#editor').on('keyup', function(){            invokeRender();              });
-    editor.selection.on('changeCursor', function(){ invokeCursorChanged();       });
+    $('#editor').on('keyup',                        debounce(invokeRender, 800)     );
+    editor.selection.on('changeCursor', function(){ invokeCursorChanged();          });
 
-    $('#open').on('change', function(){             invokeOpenFile();            });
+    $('#open').on('change', function(){             invokeOpenFile();               });
     
-    $('.icon.new').on('click', function(){          invokeNewFile();             });
-    $('.icon.open').on('click', function(){         invokeOpenFileDialog();      });
-    $('.icon.save').on('click', function(){         invokeSaveFile();            });
-    $('.icon.view').on('click', function(){         invokeToggleView();          });
-    $('.icon.print').on('click', function(){        invokePrintView();           });   
-    $('.icon.present').on('click', function(){      invokePresenterView();       });
+    $('.icon.new').on('click', function(){          invokeNewFile();                });
+    $('.icon.open').on('click', function(){         invokeOpenFileDialog();         });
+    $('.icon.save').on('click', function(){         invokeSaveFile();               });
+    $('.icon.view').on('click', function(){         invokeToggleView();             });
+    $('.icon.print').on('click', function(){        invokePrintView();              });   
+    $('.icon.present').on('click', function(){      invokePresenterView();          });
 
     hotkeys('ctrl+l,ctrl+o,ctrl+s,ctrl+v,ctrl+p,f11', function(event, handler) {
         event.preventDefault();
