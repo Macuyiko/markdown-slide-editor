@@ -103,31 +103,35 @@ function invokeToggleView() {
     setTimeout(applyScreenSize, 1000);
 }
 
+function openWindowWithPost(url, windowoption, name, params) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", url);
+    form.setAttribute("target", name);
+    for (var i in params) {
+        if (params.hasOwnProperty(i)) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = i;
+            input.value = params[i];
+            form.appendChild(input);
+        }
+    }
+    document.body.appendChild(form);
+    window.open("post.htm", name, windowoption);
+    form.submit();
+    document.body.removeChild(form);
+}
+
 function openPopup(urlPart, viewOverride) {
     var code = editor.getValue();
     var view = currentView;
     if (viewOverride) view = viewOverride;
-    $.ajax({
-        url: Flask.url_for(urlPart, {'view': view + ' ' + urlPart}),
-        type: 'POST',
-        data: { text: code },
-        cache: false,
-        success: function(data) {
-            var win = window.open("", "Slide Output", 
-                "toolbar=no,location=no,directories=no,status=no,menubar=no," +
-                "scrollbars=yes,resizable=yes,width=780,height=400," +
-                "top=" + (screen.height-400) + "," +
-                "left=" + (screen.width-840)
-                );
-            var printDocument = win.document;
-            printDocument.open();
-            printDocument.write(data);
-            printDocument.close();
-        },
-        error: function() {
-            console.log(e);
-        }
-    });
+    var url = Flask.url_for(urlPart, { 'view': view });
+    var window = "toolbar=no,location=no,directories=no,status=no,menubar=no," +
+        "scrollbars=yes,resizable=yes,width=780,height=400," +
+        "top=" + (screen.height-400) + "," + "left=" + (screen.width-840);
+    openWindowWithPost(url, window, "Slide Preview Window", { text: code });
 }
 
 function invokePrintView() {
@@ -135,7 +139,7 @@ function invokePrintView() {
 }
 
 function invokePresenterView() {
-    openPopup('present_preview', 'slide-view screen');
+    openPopup('present_preview', 'slide-view screen present');
 }
 
 function invokeNewFile(skipRender) {

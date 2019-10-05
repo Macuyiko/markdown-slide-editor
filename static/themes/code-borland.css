@@ -1,6 +1,6 @@
 .hll { background-color: #ffffcc }
 .c { color: #008800; font-style: italic } /* Comment */
-.err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.err {  } /* Error */
 .k { color: #000080; font-weight: bold } /* Keyword */
 .ch { color: #008800; font-style: italic } /* Comment.Hashbang */
 .cm { color: #008800; font-style: italic } /* Comment.Multiline */
