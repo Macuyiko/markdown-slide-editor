@@ -22,12 +22,15 @@ def add_header(r):
 
 def handle_workdir(rendered):
     work_dir = rendered.get('work_dir', None)
-    if work_dir:
-        print("Changing working directory to:", work_dir)
-        chdir(initial_directory + '/' + work_dir)
-    else:
-        print("Changing working directory to:", initial_directory)
-        chdir(initial_directory)
+    try:
+        if work_dir:
+            print("Changing working directory to:", work_dir)
+            chdir(initial_directory + '/' + work_dir)
+        else:
+            print("Changing working directory to:", initial_directory)
+            chdir(initial_directory)
+    except FileNotFoundError:
+        print("Could not change working directory")
 
 @app.route("/")
 def home():

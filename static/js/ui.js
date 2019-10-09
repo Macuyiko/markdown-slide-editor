@@ -27,13 +27,13 @@ function invokeRender() {
                 currentRequest.abort();
         },
         success: function(data) {
-            getFrame(previewFrame).document.getElementById('markdown').innerHTML = data['html'];
             getFrame(previewFrame).document.getElementById('slide-theme').href = 
                 Flask.url_for('static', {'filename': 'themes/slide-' + data['slide_theme'] + '.css'}) + 
                 '?r=' + Math.random();
             getFrame(previewFrame).document.getElementById('code-theme').href = 
                 Flask.url_for('static', {'filename': 'themes/code-' + data['code_theme'] + '.css'}) + 
                 '?r=' + Math.random();
+            $(getFrame(previewFrame).document.getElementById('markdown')).html(data['html']);
             getFrame(previewFrame).onContentChanged();
         },
         error: function(e){

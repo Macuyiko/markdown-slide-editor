@@ -10,7 +10,7 @@ def parse_attribute_string(string):
         return parsed
     retained = ''
     for token in string.split():
-        if token.startswith('"') or '="' in token:
+        if (token.startswith('"') or '="' in token) and not token.endswith('"'):
             retained += token
             continue
         if retained:
