@@ -26,7 +26,7 @@
 .kt { color: #000080; font-weight: bold } /* Keyword.Type */
 .m { color: #0000FF } /* Literal.Number */
 .s { color: #0000FF } /* Literal.String */
-.na { color: #FF0000 } /* Name.Attribute */
+.na { color: #000000 } /* Name.Attribute */
 .nt { color: #000080; font-weight: bold } /* Name.Tag */
 .ow { font-weight: bold } /* Operator.Word */
 .w { color: #bbbbbb } /* Text.Whitespace */
