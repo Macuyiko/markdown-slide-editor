@@ -11,7 +11,8 @@ from bs4 import BeautifulSoup
 extensions = [
     'extra', 'codehilite', 'smarty', 'meta', 'nl2br',
     'mdx_math', 'mdx_inline_graphviz', 
-    'mdx_attribute_block', 'mdx_attribute_inline', 'mdx_image_inline'
+    'mdx_attribute_block', 'mdx_attribute_inline', 'mdx_image_inline',
+    'mdx_subscript', 'mdx_superscript', 'mdx_mark', 'mdx_del'
 ]
 
 extension_configs = {
