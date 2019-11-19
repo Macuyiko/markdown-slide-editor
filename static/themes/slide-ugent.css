@@ -218,6 +218,16 @@ div.figure.h100 {  height: 100%; }
     line-height: 14pt;
 }
 
+.slide-wrapper .smallercode .codehilite pre {
+    font-size: 10pt;
+    line-height: 12pt;
+}
+
+.slide-wrapper .evensmallercode .codehilite pre {
+    font-size: 9pt;
+    line-height: 10pt;
+}
+
 .slide-wrapper .codehilite pre {
     font-size: 14pt;
 }
