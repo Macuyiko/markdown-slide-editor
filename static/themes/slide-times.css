@@ -13,6 +13,12 @@
     margin-right:auto;
 }
 
+.thumbbox {
+    display:         flex;
+    flex-wrap:       wrap;
+    justify-content: center;
+}
+
 .doc-view hr { clear: both; }
 .doc-view hr { clear: both; }
 
@@ -237,6 +243,8 @@ div.figure.h100 {  height: 100%; }
 .slide-wrapper th { font-weight: normal !important; }
 .slide-wrapper ol { list-style-type:decimal; }
 
+.slide-wrapper p + table { font-size: 16pt; }
+
 .slide-wrapper blockquote {
     position:relative;
     margin:calc(.04px * var(--slide-height))
@@ -266,7 +274,6 @@ div.figure.h100 {  height: 100%; }
 .slide-wrapper table {
     border-spacing:0;
     border-collapse:collapse;
-    font-size: 18pt;
 }
 
 .slide-wrapper table td,.slide-wrapper table th {
