@@ -2,9 +2,16 @@
 .smaller { font-size: 80% !important; }
 .evensmaller { font-size: 60%  !important; }
 .evenevensmaller { font-size: 40%  !important; }
+.smaller table { font-size: 80% !important; }
+.evensmaller table { font-size: 60%  !important; }
+.evenevensmaller table { font-size: 40%  !important; }
 .nomargin { margin: 0; }
 .nomargin p { margin: 0; }
 .cboth { clear: both; }
+.centered table {
+    margin-left:auto; 
+    margin-right:auto;
+}
 
 .thumbbox {
     display:         flex;
@@ -208,6 +215,25 @@ div.figure.h100 {  height: 100%; }
     padding:.5em .75em;
     font-size: 14pt;
     line-height: 16pt;
+}
+
+.slide-wrapper .smallcode .codehilite pre {
+    font-size: 11pt;
+    line-height: 14pt;
+}
+
+.slide-wrapper .smallercode .codehilite pre {
+    font-size: 10pt;
+    line-height: 12pt;
+}
+
+.slide-wrapper .evensmallercode .codehilite pre {
+    font-size: 9pt;
+    line-height: 10pt;
+}
+
+.slide-wrapper .codehilite pre {
+    font-size: 14pt;
 }
 
 .slide-wrapper ol>li,.slide-wrapper ul>li { margin:.6em 0; }

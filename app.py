@@ -77,4 +77,4 @@ def render():
     return jsonify(rendered)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5454)
+    app.run(debug=True, port=5010)
