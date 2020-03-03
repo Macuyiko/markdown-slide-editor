@@ -157,7 +157,7 @@ function invokeCursorChanged() {
     var code = editor.getValue();
     var cursor = editor.selection.getCursor();
     var index = editor.session.doc.positionToIndex(cursor);
-    var re = /^---/gm;
+    var re = /^---$/gm;
     var substr = code.substr(0, index);
     var count = ((substr || '').match(re) || []).length;
     getFrame(previewFrame).onPaginationChanged(count);
