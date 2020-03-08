@@ -5,6 +5,9 @@
 .smaller table { font-size: 80% !important; }
 .evensmaller table { font-size: 60%  !important; }
 .evenevensmaller table { font-size: 40%  !important; }
+.smaller code { font-size: 80% !important; }
+.evensmaller code { font-size: 60%  !important; }
+.evenevensmaller code { font-size: 40%  !important; }
 .nomargin { margin: 0; }
 .nomargin p { margin: 0; }
 .cboth { clear: both; }
