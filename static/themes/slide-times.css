@@ -242,6 +242,7 @@ div.figure.h100 {  height: 100%; }
 .slide-wrapper ol>li,.slide-wrapper ul>li { margin:.6em 0; }
 .slide-wrapper ol>li>p,.slide-wrapper ul>li>p { margin:0; }
 .slide-wrapper ul { font-size: 80% !important; }
+.slide-wrapper ul code { font-size: 80% !important; }
 .slide-wrapper li { line-height: 1.0em !important; }
 .slide-wrapper th { font-weight: normal !important; }
 .slide-wrapper ol { list-style-type:decimal; }

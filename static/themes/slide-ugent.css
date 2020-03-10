@@ -245,6 +245,7 @@ div.figure.h100 {  height: 100%; }
 .slide-wrapper ol>li,  .slide-wrapper ul>li { margin:.3em 0; }
 .slide-wrapper ol>li>p,.slide-wrapper ul>li>p { margin:0; }
 .slide-wrapper ul { font-size: 80% !important; }
+.slide-wrapper ul code { font-size: 80% !important; }
 .slide-wrapper p + ul { margin-top: -1em; }
 .slide-wrapper p + ol { margin-top: -1em; }
 .slide-wrapper li > ul { margin-top: .1em; }
