@@ -120,6 +120,39 @@
     }
 
     </script>
+    {% if resolution == '1280x720' %}
+    <style type="text/css">
+    :root {
+        --slide-width: 1280;
+        --slide-height: 720;
+        --screen-width: 1280;
+        --screen-height: 720;
+    }
+    @media not print {
+        :root {
+            --preview-margin: 20;
+        }
+        body.present {
+            --preview-margin: 0;
+        }
+    }
+    {% if 'slide-view' in view %}
+    /* 96dpi default in Chrome */
+    @media print {
+        :root {
+            --preview-margin: 0;
+        }
+        @page {
+            size: 10.667in 6in;
+            margin: 0;
+            bleed: 0; 
+        }
+    }
+    {% endif -%}
+    </style>
+    {% endif -%}
+
+    {% if resolution == '1024x768' %}
     <style type="text/css">
     @media not print {
         :root {
@@ -152,6 +185,7 @@
     }
     {% endif -%}
     </style>
+    {% endif -%}
     </head>
     
     <body class="{{ view }}">

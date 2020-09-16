@@ -223,6 +223,11 @@ div.figure.h100 {  height: 100%; }
     line-height: 16pt;
 }
 
+.slide-wrapper pre code {
+    background-color: #fafafa;
+    color: black;
+}
+
 .slide-wrapper .smallcode .codehilite pre {
     font-size: 11pt;
     line-height: 14pt;

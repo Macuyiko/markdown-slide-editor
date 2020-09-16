@@ -12,6 +12,8 @@ app = Flask(__name__)
 jsglue = JSGlue(app)
 initial_directory = getcwd()
 
+RESOLUTION = '1280x720'
+
 @app.after_request
 def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -51,7 +53,7 @@ def preview(view=None, auto_print=False, auto_full=False):
     text = request.form.get('text')
     rendered = render_text_with_view(text, view)
     handle_workdir(rendered)
-    return render_template('preview.html', **rendered, auto_print=auto_print, auto_full=auto_full)
+    return render_template('preview.html', **rendered, auto_print=auto_print, auto_full=auto_full, resolution=RESOLUTION)
 
 @app.route("/print", methods=['GET', 'POST'])
 @app.route("/print/<view>", methods=['GET', 'POST'])
