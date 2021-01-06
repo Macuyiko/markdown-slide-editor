@@ -309,14 +309,14 @@ div.figure.h100 {  height: 100%; }
 }
 
 .slide-wrapper table td,.slide-wrapper table th {
-    border-color:#455a64
+    border-color: #cccccc;
 }
 
 .slide-wrapper table thead th {
-    background:#455a64;
-    color:#fff8e1
+    background: #dfdfdf;
+    color: black;
 }
 
-.slide-wrapper table tbody tr:nth-child(odd) td,.slide-wrapper table tbody tr:nth-child(odd) th {
-    background:rgba(69,90,100,.1)
+.slide-wrapper table tbody tr:nth-child(even) td,.slide-wrapper table tbody tr:nth-child(even) th {
+    background: rgba(69,90,100,.1)
 }
