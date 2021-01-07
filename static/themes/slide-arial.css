@@ -15,6 +15,7 @@
     margin-left:auto; 
     margin-right:auto;
 }
+.center { text-align: center; }
 
 .doc-view hr { clear: both; }
 .doc-view hr { clear: both; }
@@ -137,6 +138,8 @@ div.figure.h100 {  height: 100%; }
 }
 .slide-wrapper.only-headings h1 { font-size: 140%; }
 .slide-wrapper.only-headings h2 { font-size: 120%; }
+
+.slide-wrapper .slide-page { font-size: 16pt; }
 
 .slide-wrapper h1 {
     font-size:1.8em;
