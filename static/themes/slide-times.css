@@ -1,10 +1,12 @@
 .noback tr td { background-color: #efefef !important; }
-.smaller { font-size: 80% !important; }
+.small { font-size: 80% !important; }
+.smaller { font-size: 70% !important; }
 .evensmaller { font-size: 60%  !important; }
-.evenevensmaller { font-size: 40%  !important; }
-.smaller table { font-size: 80% !important; }
+.evenevensmaller { font-size: 50%  !important; }
+.small table { font-size: 80% !important; }
+.smaller table { font-size: 70% !important; }
 .evensmaller table { font-size: 60%  !important; }
-.evenevensmaller table { font-size: 40%  !important; }
+.evenevensmaller table { font-size: 50%  !important; }
 .smaller code { font-size: 80% !important; }
 .evensmaller code { font-size: 60%  !important; }
 .evenevensmaller code { font-size: 40%  !important; }
