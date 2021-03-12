@@ -229,6 +229,10 @@ div.figure.h100 {  height: 100%; }
     color: black;
 }
 
+.slide-wrapper .sepcode .codehilite {
+    margin-bottom: 12pt;
+}
+
 .slide-wrapper .smallcode .codehilite pre {
     font-size: 11pt;
     line-height: 14pt;
