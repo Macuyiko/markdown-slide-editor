@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/slides.css') }}">
-    <link id="slide-theme" rel="stylesheet" href="{{ url_for('static', filename='themes/slide-'+slide_theme+'.css') }}?{{ range(9999999999) | random }}">
-    <link id="code-theme" rel="stylesheet" href="{{ url_for('static', filename='themes/code-'+code_theme+'.css') }}?{{ range(9999999999) | random }}">
+    <link id="slide-theme" rel="stylesheet"
+        href="{{ url_for('static', filename='themes/slide-'+slide_theme+'.css') }}?{{ range(9999999999) | random }}">
+    <link id="code-theme" rel="stylesheet"
+        href="{{ url_for('static', filename='themes/code-'+code_theme+'.css') }}?{{ range(9999999999) | random }}">
     <script src="//code.jquery.com/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
     <script src="//unpkg.com/hotkeys-js/dist/hotkeys.min.js" type="text/javascript" charset="utf-8"></script>
@@ -20,178 +23,184 @@
     });
     </script>
     <script type="text/javascript">
-    var pageNumber = 0;
-    $(function() {
-        hotkeys('left,right,up,down,space,home,end,pageup,pagedown', function(event, handler) {
-            event.preventDefault();
-            switch(handler.key){
-                case "left": onPaginationChanged(pageNumber-1); break;
-                case "up": onPaginationChanged(pageNumber-1); break;
-                case "pageup": onPaginationChanged(pageNumber-1); break;
-                case "right": onPaginationChanged(pageNumber+1); break;
-                case "down": onPaginationChanged(pageNumber+1); break;
-                case "pagedown": onPaginationChanged(pageNumber+1); break;
-                case "space": onPaginationChanged(pageNumber+1); break;
-                case "home": onPaginationChanged(0); break;
-                case "end": onPaginationChanged($('.slide-wrapper').length - 1); break;
-            }
-            return false;
+        var pageNumber = 0;
+        $(function () {
+            hotkeys('left,right,up,down,space,home,end,pageup,pagedown', function (event, handler) {
+                event.preventDefault();
+                switch (handler.key) {
+                    case "left": onPaginationChanged(pageNumber - 1); break;
+                    case "up": onPaginationChanged(pageNumber - 1); break;
+                    case "pageup": onPaginationChanged(pageNumber - 1); break;
+                    case "right": onPaginationChanged(pageNumber + 1); break;
+                    case "down": onPaginationChanged(pageNumber + 1); break;
+                    case "pagedown": onPaginationChanged(pageNumber + 1); break;
+                    case "space": onPaginationChanged(pageNumber + 1); break;
+                    case "home": onPaginationChanged(0); break;
+                    case "end": onPaginationChanged($('.slide-wrapper').length - 1); break;
+                }
+                return false;
+            });
+            onPaginationChanged(pageNumber);
+            $(window).on('resize', function () { applyScreenSize(); });
+
+            {% if auto_print %} onPrintRequest(); {% endif %}
+            {% if auto_full %} onPresentRequest(); {% endif %}
         });
-        onPaginationChanged(pageNumber);
-        $(window).on('resize', function(){              applyScreenSize();           });
 
-        {% if auto_print %}onPrintRequest();{% endif %}
-        {% if auto_full %}onPresentRequest();{% endif %}
-    });
-
-    function setStyle(identifier, css) {
-        var id  = "style-" + identifier;
-        var elm = $('#' + id);
-        if (elm.length <= 0)
-            elm = $('<style id="' + id + '"></style>').appendTo(document.head);
-        elm.text(css)
-    }
-
-    function getCSSvar(prop) {
-        return getComputedStyle(document.documentElement).getPropertyValue(prop);
-    }
-
-    function getSlideSize() {
-        var size = {
-            w: getCSSvar('--slide-width'),
-            h: getCSSvar('--slide-height')
+        function setStyle(identifier, css) {
+            var id = "style-" + identifier;
+            var elm = $('#' + id);
+            if (elm.length <= 0)
+                elm = $('<style id="' + id + '"></style>').appendTo(document.head);
+            elm.text(css)
         }
-        size.ratio = size.w / size.h;
-        return size;
-    }
 
-    function getScreenSize() {
-        var size = {
-            w: document.documentElement.clientWidth,
-            h: document.documentElement.clientHeight
+        function getCSSvar(prop) {
+            return getComputedStyle(document.documentElement).getPropertyValue(prop);
         }
-        var previewMargin = getCSSvar('--preview-margin')
-        size.ratio = (size.w - previewMargin * 2) / (size.h - previewMargin * 2)
-        return size;
-    }
 
-    function applySlideSize(width, height) {
-        setStyle('slideSize',
-            "body { --slide-width: "+width+" || 'inherit'}; --slide-height: "+height+" || 'inherit'}; }");
-        applyScreenSize();
-    }
-
-    function applyScreenSize() {
-        size = getScreenSize();
-        setStyle('screenSize', "body { --screen-width: "+size.w+"; --screen-height: "+size.h+"; }");
-        $('#container').toggleClass('height-base', size.ratio > getSlideSize().ratio);
-    }
-    
-    function onContentChanged() {
-        MathJax.Hub.Typeset();
-    }
-    
-    function onPrintRequest() {
-        window.print();
-    }
-    
-    function onPresentRequest() {
-        var elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.mozRequestFullScreen) { /* Firefox */
-            elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE/Edge */
-            elem.msRequestFullscreen();
+        function getSlideSize() {
+            var size = {
+                w: getCSSvar('--slide-width'),
+                h: getCSSvar('--slide-height')
+            }
+            size.ratio = size.w / size.h;
+            return size;
         }
-    }
-    
-    function onPaginationChanged(pageNumZeroIndexed) {
-        pageNumber = pageNumZeroIndexed;
-        if (pageNumber < 0) pageNumber = 0;
-        if (pageNumber >= $('.slide-wrapper').length) pageNumber = $('.slide-wrapper').length - 1;
-        setStyle('pagination', 'body.slide-view.screen .slide-wrapper#page_'+(pageNumber+1)+' { display: initial; }');
-    }
 
-    function onResized() {
-        applyScreenSize();
-    }
+        function getScreenSize() {
+            var size = {
+                w: document.documentElement.clientWidth,
+                h: document.documentElement.clientHeight
+            }
+            var previewMargin = getCSSvar('--preview-margin')
+            size.ratio = (size.w - previewMargin * 2) / (size.h - previewMargin * 2)
+            return size;
+        }
+
+        function applySlideSize(width, height) {
+            setStyle('slideSize',
+                "body { --slide-width: " + width + " || 'inherit'}; --slide-height: " + height + " || 'inherit'}; }");
+            applyScreenSize();
+        }
+
+        function applyScreenSize() {
+            size = getScreenSize();
+            setStyle('screenSize', "body { --screen-width: " + size.w + "; --screen-height: " + size.h + "; }");
+            $('#container').toggleClass('height-base', size.ratio > getSlideSize().ratio);
+        }
+
+        function onContentChanged() {
+            MathJax.Hub.Typeset();
+        }
+
+        function onPrintRequest() {
+            window.print();
+        }
+
+        function onPresentRequest() {
+            var elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        function onPaginationChanged(pageNumZeroIndexed) {
+            pageNumber = pageNumZeroIndexed;
+            if (pageNumber < 0) pageNumber = 0;
+            if (pageNumber >= $('.slide-wrapper').length) pageNumber = $('.slide-wrapper').length - 1;
+            setStyle('pagination', 'body.slide-view.screen .slide-wrapper#page_' + (pageNumber + 1) + ' { display: initial; }');
+        }
+
+        function onResized() {
+            applyScreenSize();
+        }
 
     </script>
     {% if resolution == '1280x720' %}
     <style type="text/css">
-    :root {
-        --slide-width: 1280;
-        --slide-height: 720;
-        --screen-width: 1280;
-        --screen-height: 720;
-    }
-    @media not print {
         :root {
-            --preview-margin: 20;
+            --slide-width: 1280;
+            --slide-height: 720;
+            --screen-width: 1280;
+            --screen-height: 720;
         }
-        body.present {
-            --preview-margin: 0;
+
+        @media not print {
+            :root {
+                --preview-margin: 20;
+            }
+
+            body.present {
+                --preview-margin: 0;
+            }
         }
-    }
-    {% if 'slide-view' in view %}
-    /* 96dpi default in Chrome */
-    @media print {
-        :root {
-            --preview-margin: 0;
+
+        {% if 'slide-view'in view %}
+        /* 96dpi default in Chrome */
+        @media print {
+            :root {
+                --preview-margin: 0;
+            }
+
+            @page {
+                size: 13.33334in 7.5in;
+                margin: 0cm 0cm 0cm 0cm !important;
+                bleed: 0cm 0cm 0cm 0cm !important;
+            }
         }
-        @page {
-            size: 10.667in 6in;
-            margin: 0;
-            bleed: 0; 
-        }
-    }
-    {% endif -%}
+        {% endif -%}
     </style>
     {% endif -%}
 
     {% if resolution == '1024x768' %}
     <style type="text/css">
-    @media not print {
-        :root {
-            --slide-width: 1024;
-            --slide-height: 768;
-            --preview-margin: 20;
-            --screen-width: 600;
-            --screen-height: 480;
-        }
-        body.present {
-            --preview-margin: 0;
-        }
-    }
+        @media not print {
+            :root {
+                --slide-width: 1024;
+                --slide-height: 768;
+                --preview-margin: 20;
+                --screen-width: 600;
+                --screen-height: 480;
+            }
 
-    {% if 'slide-view' in view %}
-    /* 96dpi default in Chrome */
-    @media print {
-        :root {
-            --slide-width: 1024;
-            --slide-height: 768;
-            --preview-margin: 0;
-            --screen-width: 600;
-            --screen-height: 480;
+            body.present {
+                --preview-margin: 0;
+            }
         }
-        @page {
-            size: 10.667in 8in;
-            margin: 0;
-            bleed: 0; 
+
+        {% if 'slide-view'in view %}
+        /* 96dpi default in Chrome */
+        @media print {
+            :root {
+                --slide-width: 1024;
+                --slide-height: 768;
+                --preview-margin: 0;
+                --screen-width: 600;
+                --screen-height: 480;
+            }
+
+            @page {
+                size: 10.66667in 8in;
+                margin: 0cm 0cm 0cm 0cm !important;
+                bleed: 0cm 0cm 0cm 0cm !important;
+            }
         }
-    }
-    {% endif -%}
+        {% endif -%}
     </style>
     {% endif -%}
-    </head>
-    
-    <body class="{{ view }}">
-        <div id="container">
-            <div id="markdown" class="markdown-body">{{ html|safe }}</div>
-        </div>
-    </body>
-    
+</head>
+
+<body class="{{ view }}">
+    <div id="container">
+        <div id="markdown" class="markdown-body">{{ html|safe }}</div>
+    </div>
+</body>
+
 </html>
