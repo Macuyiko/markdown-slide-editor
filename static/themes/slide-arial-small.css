@@ -104,7 +104,7 @@ div.figure.h100 {  height: 100%; }
 }
 
 .slide-view .markdown-body {
-    font-size: 24pt;
+    font-size: 22pt;
 }
 
 .slide-wrapper {
@@ -142,7 +142,7 @@ div.figure.h100 {  height: 100%; }
 .slide-wrapper .slide-page { font-size: 16pt; }
 
 .slide-wrapper h1 {
-    font-size:1.8em;
+    font-size:1.6em;
     font-weight: normal;
     font-family: 'Arial Nova', sans-serif;
     text-decoration: underline;
@@ -180,7 +180,7 @@ div.figure.h100 {  height: 100%; }
 }
 
 .markdown-body code, .markdown-body pre {
-    font-family: 'Monofur', 'Consolas', monospace;
+    font-family: 'Fira Code', 'Consolas', monospace;
 }
 
 .doc-view code {
