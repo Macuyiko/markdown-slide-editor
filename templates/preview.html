@@ -7,21 +7,23 @@
         href="{{ url_for('static', filename='themes/slide-'+slide_theme+'.css') }}?{{ range(9999999999) | random }}">
     <link id="code-theme" rel="stylesheet"
         href="{{ url_for('static', filename='themes/code-'+code_theme+'.css') }}?{{ range(9999999999) | random }}">
-    <script src="//code.jquery.com/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-    <script src="//unpkg.com/hotkeys-js/dist/hotkeys.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\\\(","\\\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\\\[","\\\\]"] ],
-            processEscapes: true
-        },
-        "HTML-CSS": { fonts: ["TeX"] }
-    });
+    <script type="text/javascript">
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ["\\\\(", "\\\\)"]],
+                displayMath: [['$$', '$$'], ["\\\\[", "\\\\]"]],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
     </script>
+    {{ JSGlue.include() }}
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
     <script type="text/javascript">
         var pageNumber = 0;
         $(function () {
@@ -40,6 +42,7 @@
                 }
                 return false;
             });
+
             onPaginationChanged(pageNumber);
             $(window).on('resize', function () { applyScreenSize(); });
 
@@ -90,8 +93,29 @@
             $('#container').toggleClass('height-base', size.ratio > getSlideSize().ratio);
         }
 
+        function replaceP5Tags() {
+            $("script[type='p5js']").each(function () {
+                var thisScript = $(this);
+                var htmlContent = $(this).html();
+                $.ajax(Flask.url_for('p5js'), {
+                    data: JSON.stringify({ script: htmlContent }),
+                    contentType: 'application/json',
+                    type: 'POST',
+                    success: function (response) {
+                        var iframe = $("<iframe>").attr("srcdoc", response).attr("width", "100%");
+                        $.each(thisScript[0].attributes, function (i, a) { iframe.attr(a.name, a.value); });
+                        thisScript.replaceWith(iframe);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error occurred while sending request:", error);
+                    }
+                });
+            });
+        }
+
         function onContentChanged() {
-            MathJax.Hub.Typeset();
+            MathJax.typeset();
+            replaceP5Tags();
         }
 
         function onPrintRequest() {
@@ -142,7 +166,10 @@
             }
         }
 
-        {% if 'slide-view'in view %}
+            {
+            % if 'slide-view' in view %
+        }
+
         /* 96dpi default in Chrome */
         @media print {
             :root {
@@ -155,7 +182,10 @@
                 bleed: 0cm 0cm 0cm 0cm !important;
             }
         }
-        {% endif -%}
+
+            {
+            % endif -%
+        }
     </style>
     {% endif -%}
 
@@ -175,7 +205,10 @@
             }
         }
 
-        {% if 'slide-view'in view %}
+            {
+            % if 'slide-view' in view %
+        }
+
         /* 96dpi default in Chrome */
         @media print {
             :root {
@@ -192,7 +225,10 @@
                 bleed: 0cm 0cm 0cm 0cm !important;
             }
         }
-        {% endif -%}
+
+            {
+            % endif -%
+        }
     </style>
     {% endif -%}
 </head>
