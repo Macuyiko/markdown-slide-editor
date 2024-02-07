@@ -2,7 +2,6 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import jsonify
-from flask import url_for
 from flask import send_file
 from flask_jsglue import JSGlue
 from mdx.renderer import render_text_with_view
