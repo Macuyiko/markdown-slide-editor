@@ -1,4 +1,5 @@
-from markdown.util import etree
+import xml.etree.ElementTree as etree
+
 
 def parse_attribute_string(string):
     parsed = {'id': None, 'classes': [], 'attrs': {'markdown': '1'}, 'tagname': None, 'closed': False}

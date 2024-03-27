@@ -97,13 +97,10 @@ class InlineGraphvizPreprocessor(markdown.preprocessors.Preprocessor):
                         text[:m.start()], img, text[m.end():])
 
                 except Exception as e:
-                        import traceback
-                        import sys
-                        traceback.print_exc(file=sys.stdout)
-                        err = str(e) + ' : ' + str(args)
-                        return (
-                            '<pre>Error : ' + err + '</pre>'
-                            '<pre>' + content + '</pre>').split('\n')
+                    import traceback
+                    import sys
+                    traceback.print_exc(file=sys.stdout)
+                    break
 
             else:
                 break

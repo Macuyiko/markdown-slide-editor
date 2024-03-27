@@ -12,7 +12,6 @@ Examples:
 """
 
 import markdown
-from markdown.util import etree
 import re
 from tag_attribute_parser import parse_attribute_string, attributes_to_element
 

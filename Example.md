@@ -9,7 +9,7 @@ code-theme: borland
 
 # Welcome
 
-This example slack stack illustrates the different functionality of the Markdown slides editor.
+This example slide stack illustrates the different functionality of the Markdown slides editor.
 
 The rationale behind developing this basically boils down to me getting increasingly fed up by PowerPoint. As such, I wanted an editor which allowed me to:
 
@@ -48,7 +48,8 @@ my_list [x**2 for x in range(4)]
 
 MathJax provides the math rendering functionality:
 
-- A formula: $\sum_{x}^{x=k} x^2$
+- A formula: \(\sum_{x}^{x=k} x^2\)
+- Note that dollar sign formula notation is not supported
 
 ---
 
@@ -63,7 +64,7 @@ Support for Markdown tables is provides as well:
 | Tables        | Are               | Handy         |
 | ------------- |:-----------------:| -------------:|
 | Left aligned  | Center aligned    | Right aligned |
-| 88            | $$X=\frac{Z}{Y}$$ | \$12          |
+| 88            | \[X=\frac{Z}{Y}\] | $12           |
 | Background    | alternating       | colors        |
 
 ---
@@ -127,7 +128,7 @@ This text is placed in the second column
 
 Image positioning is by far the most annoying thing to get right. As such, the alt attribute can be used to provide some sizing and other guidelines, e.g. by using `s50%` for sizing and `o30%` for opacity:
 
-![s50% o30%](//github.githubassets.com/images/modules/explore/resources/open_source_guides.png)
+![s50% o30%](//blog.macuyiko.com/images/avatar.jpg)
 
 ---
 
@@ -135,11 +136,11 @@ Image positioning is by far the most annoying thing to get right. As such, the a
 
 Images can also be positioned on the `left`, `right`, or `center`:
 
-![s50% o30% center](//github.githubassets.com/images/modules/explore/resources/open_source_guides.png)
+![s50% o30% center](//blog.macuyiko.com/images/avatar.jpg)
 
-![s50% o30% left](//github.githubassets.com/images/modules/explore/resources/open_source_guides.png)
+![s50% o30% left](//blog.macuyiko.com/images/avatar.jpg)
 
-Note that left uses floats, so text will be places to the right of the image.
+Note that left uses floats, so text will be placed to the right of the image.
 
 ---
 
@@ -153,9 +154,9 @@ In many cases, you want to set a caption for an image. To do so, an alternative 
 
 This also allows positioning on the left, right and center. Note that captions can be Markdown formatted to provide simple formatting (like links and bold text), though all extensions are disabled
 
-![](//github.githubassets.com/images/modules/explore/resources/open_source_guides.png){.fleft .w20 caption="This is the **first** image"}
+![](//blog.macuyiko.com/images/avatar.jpg){.fleft .w20 caption="This is the **first** image"}
 
-![](//github.githubassets.com/images/modules/explore/resources/open_source_guides.png){.fright .w20 caption="This is the **second** image"}
+![](//blog.macuyiko.com/images/avatar.jpg){.fright .w20 caption="This is the **second** image"}
 
 ---
 
@@ -163,9 +164,9 @@ This also allows positioning on the left, right and center. Note that captions c
 
 In most cases, you'll want to use this to center an image with a caption:
 
-![](//github.githubassets.com/images/modules/explore/resources/open_source_guides.png){.center .w60 caption="A simple centered image with a caption"}
+![](//blog.macuyiko.com/images/avatar.jpg){.center .w20 caption="A simple centered image with a caption"}
 
-For more complex use cases, it's advised to resort to custom HTML blocks and your CSS styling.
+For more complex use cases, it's advised to resort to custom HTML blocks and your CSS styling, or use the `<figcaption>` tag.
 
 ---
 
@@ -173,7 +174,7 @@ For more complex use cases, it's advised to resort to custom HTML blocks and you
 
 Full slide backgrounds (like on this slide) can be set with the `bg` alt property. `fit` and custom opacities can be added here as well. Use `original` to remove the default opacity.
 
-![bg](//github.githubassets.com/images/modules/explore/resources/open_source_guides.png)
+![bg](https://blog.macuyiko.com/images/backgrounds/noita.jpg)
 
 ---
 
@@ -244,28 +245,8 @@ This being said, Chrome is still extremely picky about what you try to throw int
 
 ---
 
-# Printing (continued)
-
-As such, a piece of `<style>` is injected into the preview page based on which type of view we're looking at, where we're forced to just hardcode the page size:
-
-```CSS
-@media print {
-    @page {
-        size: 10.7in 7.5in;
-        margin: 0;
-        bleed: 0; 
-    }
-}
-
-```
-
-In addition, note that the sizes above are not exactly a 4:3 ratio. For some reason, Chrome decides to add a little bit of "bleed" at the end of every slide, even with margins set to 0. After playing around with several options and experiments, the best way around this was to simply adjust the page sizes until you get a good-lucking result (without bottom-bleed).
-
----
-
 # Slide sizes
 
-The default slide size is 1024\*768 pixels on the screen (scaled up in presenter mode) and 10.7\*7.5 inches on paper.
+The default slide size is 16:9.
 
-There's currently not a very easy way to change this except to dig into the `<style>` tag in the `preview.html` file and change it over there. I might think about adding some additional meta statements for this later on, though I haven't found a strong reason to do so yet as most of my lectures are in a boring, old-fashioned 4:3 format.
-
+There's currently not a very easy way to change this except to dig into the `<style>` tag in the `preview.html` file and change it over there. I might think about adding some additional meta statements for this later on, though I haven't found a strong reason to do so yet.

@@ -3,6 +3,12 @@ from flask import render_template
 from flask import request
 from flask import jsonify
 from flask import send_file
+import jinja2
+from markupsafe import Markup
+
+# Monkeypatch to make flask_jsglue work
+jinja2.Markup = Markup
+
 from flask_jsglue import JSGlue
 from mdx.renderer import render_text_with_view
 from os import getcwd, chdir
