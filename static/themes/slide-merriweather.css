@@ -367,23 +367,19 @@ div.figure.h100 {
     color: black;
 }
 
-.slide-wrapper .smallcode .codehilite pre {
+.slide-wrapper .smallcode pre {
     font-size: 11pt;
     line-height: 14pt;
 }
 
-.slide-wrapper .smallercode .codehilite pre {
+.slide-wrapper .smallercode pre {
     font-size: 10pt;
     line-height: 12pt;
 }
 
-.slide-wrapper .evensmallercode .codehilite pre {
+.slide-wrapper .evensmallercode pre {
     font-size: 9pt;
     line-height: 10pt;
-}
-
-.slide-wrapper .codehilite pre {
-    font-size: 14pt;
 }
 
 .slide-wrapper ol>li, .slide-wrapper ul>li {
