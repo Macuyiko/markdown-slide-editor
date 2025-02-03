@@ -103,7 +103,7 @@ def postprocess_pages(html, with_pages="allbutfirst", with_footer=""):
 
 
 def postprocess_backgrounds(html):
-    h = BeautifulSoup(html, "html.parser")
+    h = BeautifulSoup(html, "lxml")
     for background_image in h.select('p > img[alt~="bg"]'):
         url = background_image.get("src", None)
         if url is None:
@@ -134,7 +134,7 @@ def postprocess_backgrounds(html):
 
 
 def postprocess_images(html):
-    h = BeautifulSoup(html, "html.parser")
+    h = BeautifulSoup(html, "lxml")
     for image in h.select('img[alt*="%"]'):
         alt = image.get("alt", "")
         for alt_piece in re.compile(r"\s+").split(alt):
@@ -152,13 +152,13 @@ def postprocess_images(html):
 
 
 def postprocess_only_elements(html):
-    h = BeautifulSoup(html, "html.parser")
+    h = BeautifulSoup(html, "lxml")
     for slide_wrapper in h.select(".slide-wrapper"):
         inner = slide_wrapper.select(".slide > .slide-inner")
         if not inner:
             continue
         inner = inner[0]
-        inner_children = inner.find_all(text=False, recursive=False)
+        inner_children = inner.find_all(recursive=False)
         innerContents = [
             el
             for el in inner_children

@@ -1,0 +1,14 @@
+[project]
+name = "markdown-slide-editor"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask-jsglue>=0.3.1",
+    "flask>=3.1.0",
+    "markdown>=3.7",
+    "beautifulsoup4>=4.13.1",
+    "python-markdown-math>=0.8",
+    "lxml>=5.3.0",
+]
