@@ -233,17 +233,17 @@ div.figure.h100 {  height: 100%; }
     margin-bottom: 12pt;
 }
 
-.slide-wrapper .smallcode .codehilite pre {
+.slide-wrapper .smallcode .codehilite pre, .slide-wrapper .smallcode .codehilite code {
     font-size: 11pt;
     line-height: 14pt;
 }
 
-.slide-wrapper .smallercode .codehilite pre {
+.slide-wrapper .smallercode .codehilite pre, .slide-wrapper .smallercode .codehilite code {
     font-size: 10pt;
     line-height: 12pt;
 }
 
-.slide-wrapper .evensmallercode .codehilite pre {
+.slide-wrapper .evensmallercode .codehilite pre, .slide-wrapper .evensmallercode .codehilite code {
     font-size: 9pt;
     line-height: 10pt;
 }
