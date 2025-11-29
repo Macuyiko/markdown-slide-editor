@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
 .noback tr td { background-color: #efefef !important; }
 .smaller { font-size: 80% !important; }
 .evensmaller { font-size: 60%  !important; }
@@ -20,28 +22,12 @@
 .doc-view hr { clear: both; }
 .doc-view hr { clear: both; }
 
-figcaption {
-    font-size: 60%;
-    text-align: center;
-}
+figcaption { font-size: 60%; text-align: center; }
+figcaption p { margin: 0; padding: 0; }
+.newsquote { font-size: 70%; background-color: #eee; }
 
-figcaption p {
-    margin: 0; padding: 0;
-}
-
-.newsquote {
-    font-size: 70%; font-family: sans-serif; background-color: #eee;
-}
-
-.col-left {
-    float: left;
-    width: 45%;
-}
-
-.col-right {
-    float: right;
-    width: 45%;
-}
+.col-left { float: left; width: 45%; }
+.col-right { float: right; width: 45%; }
 
 .pull-left {
     display: block;
@@ -147,7 +133,6 @@ div.figure.h100 {  height: 100%; }
     font-size:1.6em;
     font-weight: normal;
     font-family: 'Lora', serif;
-    /*text-decoration: underline;
     color: #1E64C8;*/
 }
 
@@ -182,7 +167,7 @@ div.figure.h100 {  height: 100%; }
 }
 
 .markdown-body code, .markdown-body pre {
-    font-family: "Atkinson Hyperlegible Mono", sans-serif;
+    font-family: "Atkinson Hyperlegible Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
 }
@@ -330,5 +315,5 @@ div.figure.h100 {  height: 100%; }
 }
 
 .slide-wrapper table tbody tr:nth-child(even) td,.slide-wrapper table tbody tr:nth-child(even) th {
-    background: rgba(69,90,100,.1)
+    background: #fefefe;
 }
