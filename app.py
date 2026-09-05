@@ -1,19 +1,16 @@
-from flask import Flask
-from flask import render_template
-from flask import request
-from flask import jsonify
-from flask import send_file
-from flask import abort
 import jinja2
+from flask import Flask, abort, jsonify, render_template, request, send_file
 from markupsafe import Markup
 
 # Monkeypatch to make flask_jsglue work
 jinja2.Markup = Markup
 
-from flask_jsglue import JSGlue
-from mdx.renderer import render_text_with_view
 import os
 from os import getcwd
+
+from flask_jsglue import JSGlue
+
+from mdx.renderer import render_text_with_view
 
 app = Flask(__name__)
 jsglue = JSGlue(app)

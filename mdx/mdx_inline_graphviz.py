@@ -22,14 +22,15 @@ Inspired by jawher/markdown-dot (https://github.com/jawher/markdown-dot)
 Modified to work with Python 3 and cleaned-up SVG output
 """
 
+import base64
+import glob
 import os
 import re
-import sys
-import glob
 import shutil
-import markdown
 import subprocess
-import base64
+import sys
+
+import markdown
 
 # Global vars
 BLOCK_RE = re.compile(

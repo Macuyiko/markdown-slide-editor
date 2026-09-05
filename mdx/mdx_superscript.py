@@ -3,9 +3,9 @@ Superscript using ^
 
 """
 
+
 import markdown
 from markdown.inlinepatterns import SimpleTagPattern
-import re
 
 SUPERSCRIPT_RE = r"(\^)([^\^]+)\2"
 

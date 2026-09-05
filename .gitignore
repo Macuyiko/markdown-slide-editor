@@ -124,3 +124,7 @@ dmypy.json
 
 # macOS
 .DS_Store
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/

@@ -3,9 +3,9 @@ Mark using ==
 
 """
 
+
 import markdown
 from markdown.inlinepatterns import SimpleTagPattern
-import re
 
 MARK_RE = r"(==)([^=]+)\2"
 

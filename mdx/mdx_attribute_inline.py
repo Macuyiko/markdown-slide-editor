@@ -11,10 +11,10 @@ Examples:
 
 """
 
-import markdown
-import re
 import xml.etree.ElementTree as etree
-from tag_attribute_parser import parse_attribute_string, attributes_to_element
+
+import markdown
+from tag_attribute_parser import attributes_to_element, parse_attribute_string
 
 LINE_RE = r'\[(?P<content>.*?)\](?P<attributes>\{.*?\})'
 

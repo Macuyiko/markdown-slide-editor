@@ -5,9 +5,10 @@ Usage: ![alt text](href){ attributes }
 
 """
 
-import markdown
 import re
-from tag_attribute_parser import parse_attribute_string, attributes_to_tag
+
+import markdown
+from tag_attribute_parser import attributes_to_tag, parse_attribute_string
 
 LINE_RE = re.compile(r'^\!\[(?P<alt>.*?)\]\((?P<href>.*?)\)(?P<attributes>\{.*?\})\s*$')
 

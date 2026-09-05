@@ -1,10 +1,11 @@
-import os, sys
+import os
+import sys
 
 sys.path.append(os.path.dirname(__file__))
 
-import markdown
-import codecs
 import re
+
+import markdown
 from bs4 import BeautifulSoup
 
 extensions = [
@@ -42,7 +43,7 @@ def extract_percentage(text, rgx=None):
 
 
 def get_meta_or_default(meta, name, default):
-    if not meta or not name in meta or not meta[name] or not meta[name][0]:
+    if not meta or name not in meta or not meta[name] or not meta[name][0]:
         return default
     return meta[name][0]
 

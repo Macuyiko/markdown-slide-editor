@@ -3,9 +3,9 @@ Subscript using ~
 
 """
 
+
 import markdown
 from markdown.inlinepatterns import SimpleTagPattern
-import re
 
 SUBSCRIPT_RE = r"(\~)([^\~]+)\2"
 

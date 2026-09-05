@@ -3,9 +3,9 @@ Del using @@
 
 """
 
+
 import markdown
 from markdown.inlinepatterns import SimpleTagPattern
-import re
 
 DEL_RE = r"(@@)([^@]+)\2"
 
