@@ -23,6 +23,7 @@ Modified to work with Python 3 and cleaned-up SVG output
 """
 
 import re
+import sys
 import markdown
 import subprocess
 import base64
@@ -54,56 +55,58 @@ class InlineGraphvizPreprocessor(markdown.preprocessors.Preprocessor):
         text = "\n".join(lines)
         while 1:
             m = BLOCK_RE.search(text)
-            if m:
-                command = m.group('command')
-                # Whitelist command, prevent command injection.
-                if command not in SUPPORTED_COMMAMDS:
-                    raise Exception('Command not supported: %s' % command)
-                filename = m.group('filename')
-                content = m.group('content').encode()
-                filetype = filename[filename.rfind('.')+1:]
-
-                args = [command, '-T'+filetype]
-                try:
-                    proc = subprocess.Popen(
-                        args,
-                        stdin=subprocess.PIPE,
-                        stderr=subprocess.PIPE,
-                        stdout=subprocess.PIPE)
-                    proc.stdin.write(content)
-
-                    output, err = proc.communicate()
-
-                    if filetype == 'svg':
-                        data_url_filetype = 'svg+xml'
-                        encoding = 'utf-8'
-                        img = output.decode(encoding)
-                        # Remove graphviz XML header
-                        img = re.sub(r'\<\?xml.+?\?\>', '', img, flags=re.DOTALL)
-                        img = re.sub(r'\<\!DOCTYPE.+?\>', '', img, flags=re.DOTALL)
-                        img = '<div class="graphviz">' + img.replace('\n', '') + "</div>"
-                        
-                    if filetype == 'png':
-                        data_url_filetype = 'png'
-                        encoding = 'base64'
-                        output = base64.b64encode(output)
-                        data_path = "data:image/%s;%s,%s" % (
-                            data_url_filetype,
-                            encoding,
-                            output)
-                        img = "![" + filename + "](" + data_path + ")"
-
-                    text = '%s\n%s\n%s' % (
-                        text[:m.start()], img, text[m.end():])
-
-                except Exception as e:
-                    import traceback
-                    import sys
-                    traceback.print_exc(file=sys.stdout)
-                    break
-
-            else:
+            if not m:
                 break
+            command = m.group('command')
+            # Whitelist command, prevent command injection.
+            if command not in SUPPORTED_COMMAMDS:
+                print('Graphviz: command not supported: %s' % command, file=sys.stderr)
+                break
+            filename = m.group('filename')
+            content = m.group('content').encode()
+            filetype = filename[filename.rfind('.')+1:].lower()
+
+            if filetype not in ('svg', 'png'):
+                print(
+                    'Graphviz: unsupported output filetype "%s" (use .svg or .png)' % filetype,
+                    file=sys.stderr)
+                break
+
+            args = [command, '-T'+filetype]
+            try:
+                proc = subprocess.run(
+                    args,
+                    input=content,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE)
+            except FileNotFoundError:
+                print('Graphviz: executable not found: %s' % command, file=sys.stderr)
+                break
+
+            if proc.returncode != 0:
+                print(
+                    'Graphviz: %s failed:\n%s' % (command, proc.stderr.decode(errors='replace')),
+                    file=sys.stderr)
+                break
+
+            if filetype == 'svg':
+                img = proc.stdout.decode('utf-8')
+                # Remove graphviz XML header
+                img = re.sub(r'\<\?xml.+?\?\>', '', img, flags=re.DOTALL)
+                img = re.sub(r'\<\!DOCTYPE.+?\>', '', img, flags=re.DOTALL)
+                img = '<div class="graphviz">' + img.replace('\n', '') + "</div>"
+            else:
+                data_url_filetype = 'png'
+                encoding = 'base64'
+                output = base64.b64encode(proc.stdout)
+                data_path = "data:image/%s;%s,%s" % (
+                    data_url_filetype,
+                    encoding,
+                    output)
+                img = "![" + filename + "](" + data_path + ")"
+
+            text = '%s\n%s\n%s' % (
+                text[:m.start()], img, text[m.end():])
         return text.split("\n")
 
 

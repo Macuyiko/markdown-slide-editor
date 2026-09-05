@@ -13,6 +13,7 @@ Examples:
 
 import markdown
 import re
+import xml.etree.ElementTree as etree
 from tag_attribute_parser import parse_attribute_string, attributes_to_element
 
 LINE_RE = r'\[(?P<content>.*?)\](?P<attributes>\{.*?\})'

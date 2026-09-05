@@ -82,7 +82,7 @@ def postprocess_pages(html, with_pages="allbutfirst", with_footer=""):
         page_num_data = "true"
         if (with_pages == "allbutfirst" and page_num == 1) or with_pages == "none":
             page_num_str = ""
-            page_num_data = "true"
+            page_num_data = "false"
         output += (
             '<div class="slide-wrapper" id="page_{}" data-page-number="{}">'.format(
                 page_num, page_num_data
