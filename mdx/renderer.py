@@ -1,9 +1,5 @@
 import os, sys
 
-my_env = os.environ
-my_env["PATH"] = (
-    "C:\\Program Files (x86)\\Graphviz2.38\\bin\\" + os.pathsep + my_env["PATH"]
-)
 sys.path.append(os.path.dirname(__file__))
 
 import markdown
@@ -62,7 +58,7 @@ def render_text_with_view(text=None, view=None, also_postprocess=True):
     code_theme = get_meta_or_default(meta, "code-theme", "default")
     working_directory = get_meta_or_default(meta, "work-dir", ".")
     if text and also_postprocess:
-        html = postprocess(html, meta, view)
+        html = postprocess(html, meta, view, working_directory)
     return {
         "html": html,
         "meta": meta,
@@ -189,8 +185,25 @@ def postprocess_only_elements(html):
     return str(h)
 
 
-def postprocess(html, meta, view="slide-view list"):
-    post = html
+def postprocess_file_urls(html, work_dir="."):
+    """Prefix /file/ URLs with the deck's work-dir so that file requests are
+    self-contained and never depend on server-side working directory state."""
+    work_dir = (work_dir or ".").strip("/\\")
+    if not work_dir or work_dir == ".":
+        return html
+    prefix = "/file/" + work_dir + "/"
+    h = BeautifulSoup(html, "lxml")
+    for el in h.find_all(src=True):
+        src = el["src"]
+        if src.startswith("/file/") and not src.startswith(prefix):
+            rest = src[len("/file/"):]
+            if not rest.startswith(work_dir + "/"):
+                el["src"] = prefix + rest
+    return str(h)
+
+
+def postprocess(html, meta, view="slide-view list", work_dir="."):
+    post = postprocess_file_urls(html, work_dir)
     with_pages = get_meta_or_default(meta, "pages", "allbutfirst").lower()
     with_footer = get_meta_or_default(meta, "footer", "")
     if "slide-view" in view:

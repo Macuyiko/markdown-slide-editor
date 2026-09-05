@@ -2,6 +2,7 @@ var editor = null;
 var currentRequest = null;
 var previewFrame = 'preview-frame';
 var currentView = 'slide-view list';
+var currentWorkDir = '.';
 var unsavedChanges = false;
 
 function getFrame(name) {
@@ -27,6 +28,7 @@ function invokeRender() {
                 currentRequest.abort();
         },
         success: function(data) {
+            currentWorkDir = data['work_dir'] || currentWorkDir;
             getFrame(previewFrame).document.getElementById('slide-theme').href = 
                 Flask.url_for('static', {'filename': 'themes/slide-' + data['slide_theme'] + '.css'}) + 
                 '?r=' + Math.random();
@@ -78,7 +80,7 @@ function invokeSaveFile() {
     var code = editor.getValue();
     var filename = $('#filename').val();
     $.ajax(Flask.url_for('save'), {
-        data : JSON.stringify({ text: code, filename: filename }),
+        data : JSON.stringify({ text: code, filename: filename, work_dir: currentWorkDir }),
         contentType : 'application/json',
         type : 'POST',
         success: function(data) {

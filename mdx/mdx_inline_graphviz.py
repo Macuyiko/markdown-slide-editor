@@ -22,8 +22,11 @@ Inspired by jawher/markdown-dot (https://github.com/jawher/markdown-dot)
 Modified to work with Python 3 and cleaned-up SVG output
 """
 
+import os
 import re
 import sys
+import glob
+import shutil
 import markdown
 import subprocess
 import base64
@@ -34,6 +37,36 @@ BLOCK_RE = re.compile(
     re.MULTILINE | re.DOTALL)
 # Command whitelist
 SUPPORTED_COMMAMDS = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
+
+# Environment variable pointing at the directory containing the Graphviz
+# executables (e.g. C:\Program Files\Graphviz\bin)
+GRAPHVIZ_BIN_ENV = "GRAPHVIZ_BIN_DIR"
+
+
+def find_graphviz_executable(name):
+    """Locate a Graphviz executable: the GRAPHVIZ_BIN_DIR environment variable
+    first, then PATH, then a best-effort scan of the Windows Program Files
+    directories. Returns None when nothing is found."""
+    exe = name + (".exe" if os.name == "nt" else "")
+    env_dir = os.environ.get(GRAPHVIZ_BIN_ENV)
+    if env_dir:
+        candidate = os.path.join(env_dir, exe)
+        if os.path.isfile(candidate):
+            return candidate
+    found = shutil.which(name)
+    if found:
+        return found
+    if os.name == "nt":
+        roots = [
+            os.environ.get("ProgramFiles"),
+            os.environ.get("ProgramFiles(x86)"),
+            os.path.join(os.environ.get("LocalAppData", ""), "Programs"),
+        ]
+        for root in filter(None, roots):
+            matches = sorted(glob.glob(os.path.join(root, "Graphviz*", "bin", exe)))
+            if matches:
+                return matches[-1]
+    return None
 
 
 class InlineGraphvizExtension(markdown.Extension):
@@ -72,7 +105,15 @@ class InlineGraphvizPreprocessor(markdown.preprocessors.Preprocessor):
                     file=sys.stderr)
                 break
 
-            args = [command, '-T'+filetype]
+            executable = find_graphviz_executable(command)
+            if executable is None:
+                print(
+                    'Graphviz: executable "%s" not found (set %s or add Graphviz to PATH)'
+                    % (command, GRAPHVIZ_BIN_ENV),
+                    file=sys.stderr)
+                break
+
+            args = [executable, '-T'+filetype]
             try:
                 proc = subprocess.run(
                     args,

@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import jsonify
 from flask import send_file
+from flask import abort
 import jinja2
 from markupsafe import Markup
 
@@ -11,7 +12,8 @@ jinja2.Markup = Markup
 
 from flask_jsglue import JSGlue
 from mdx.renderer import render_text_with_view
-from os import getcwd, chdir
+import os
+from os import getcwd
 
 app = Flask(__name__)
 jsglue = JSGlue(app)
@@ -29,17 +31,21 @@ def add_header(r):
     return r
 
 
-def handle_workdir(rendered):
-    work_dir = rendered.get("work_dir", None)
-    try:
-        if work_dir:
-            print("Changing working directory to:", work_dir)
-            chdir(initial_directory + "/" + work_dir)
-        else:
-            print("Changing working directory to:", initial_directory)
-            chdir(initial_directory)
-    except FileNotFoundError:
-        print("Could not change working directory")
+def resolve_in_base(base, relative):
+    """Resolve a client-supplied relative path against base, refusing to
+    escape the base directory."""
+    base_abs = os.path.normcase(os.path.abspath(base))
+    joined = os.path.normcase(os.path.abspath(os.path.join(base_abs, relative)))
+    if joined != base_abs and not joined.startswith(base_abs + os.sep):
+        abort(403)
+    return joined
+
+
+def resolve_workdir(work_dir):
+    """Map a deck's work-dir meta to an absolute directory."""
+    if not work_dir or work_dir == ".":
+        return initial_directory
+    return resolve_in_base(initial_directory, work_dir)
 
 
 @app.route("/")
@@ -52,7 +58,11 @@ def save():
     json = request.get_json()
     text = json["text"]
     filename = json["filename"]
-    with open(filename, "w", encoding="utf-8", newline="") as f:
+    if not filename:
+        abort(400)
+    base = resolve_workdir(json.get("work_dir"))
+    path = resolve_in_base(base, filename)
+    with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(text)
     return jsonify({"status": "ok"})
 
@@ -69,7 +79,6 @@ def p5js():
 def preview(view=None, auto_print=False, auto_full=False):
     text = request.form.get("text")
     rendered = render_text_with_view(text, view)
-    handle_workdir(rendered)
     return render_template(
         "preview.html",
         **rendered,
@@ -93,7 +102,10 @@ def present_preview(view=None):
 
 @app.route("/file/<path:location>")
 def file(location):
-    return send_file(getcwd() + "/" + location)
+    path = resolve_in_base(initial_directory, location)
+    if not os.path.isfile(path):
+        abort(404)
+    return send_file(path)
 
 
 @app.route("/render", methods=["POST"])
@@ -102,7 +114,6 @@ def render():
     text = json.get("text")
     view = json.get("view")
     rendered = render_text_with_view(text, view)
-    handle_workdir(rendered)
     return jsonify(rendered)
 
 
