@@ -1,18 +1,26 @@
 <!doctype html>
 <html>
     <head>
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+            integrity="sha384-9Z9AuAj0Xi0z7WFOSgjjow8EnNY9wPNp925TVLlAyWhvZPsf5Ks23Ex0mxIrWJzJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css"
+            integrity="sha384-+ej8VMtCZlt+6cYHRZz5SzhI4t0/n6eLxKpiaIpnWZgE5s7S3WsBT5IKMo8mTULz" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/ui.css') }}">
 
         {{ JSGlue.include() }}
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-spellcheck.js" type="text/javascript" charset="utf-8"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-markdown.js" type="text/javascript" charset="utf-8"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="//unpkg.com/hotkeys-js/dist/hotkeys-js.min.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.44.0/ace.js" type="text/javascript" charset="utf-8"
+            integrity="sha384-GSSC7iDHSsQMslXGC0A7DhTBQBpiyEQDyNLFF5c/3R8l6B8/RJEBtU8+tWNDv/qw" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.44.0/ext-spellcheck.js" type="text/javascript" charset="utf-8"
+            integrity="sha384-HLeUYwNunT3AyRrndTaEqMkdrwOvGhBHdIgTIi5EPPX5VgadhyNitk34w+V5Klhr" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.44.0/mode-markdown.js" type="text/javascript" charset="utf-8"
+            integrity="sha384-ub8/tLQLqV5JUSne97n4VIgaBDJi1kPLig550F7YyfDp5bBHonsSAcK/wxngaTOt" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js" type="text/javascript" charset="utf-8"
+            integrity="sha384-tew0ZQCarba7OqxYqT64LdbEby+sgwjVnZbGKDbazUa5wLI5nakzVYUvrXadbFYG" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.7/dist/hotkeys-js.min.js" type="text/javascript" charset="utf-8"
+            integrity="sha384-nkzySKsRghLwUe5WqY+bR6kOpNXazuIVVbvHkmhPxI7oPXLmIele/P0dJ8nYoUFZ" crossorigin="anonymous"></script>
         <script src="{{ url_for('static', filename='js/ui.js') }}" type="text/javascript" charset="utf-8"></script>
         
         <title>Slide Editor</title>
@@ -37,7 +45,7 @@
             </div>
             <div class="row editor">
                 <div class="split" id="editor-pane">
-                    <div id="editor" contenteditable="true" spellcheck="true"></div>
+                    <div id="editor" spellcheck="true"></div>
                 </div>
                 <div class="split" id="preview-pane">
                     <iframe id="preview-frame" name="preview-frame" src="{{ url_for('preview') }}">
