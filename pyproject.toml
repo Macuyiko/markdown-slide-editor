@@ -1,7 +1,7 @@
 [project]
 name = "markdown-slide-editor"
 version = "0.1.0"
-description = "Add your description here"
+description = "A browser-based Markdown slide editor"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
