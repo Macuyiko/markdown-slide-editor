@@ -49,8 +49,15 @@ def test_inline_mark_tag():
 def test_background_images_become_slide_backgrounds():
     html = render("# One\n\n![bg](https://example.com/bg.jpg)\n")
     assert 'class="slide-bg-img"' in html
-    assert "background-image: url(https://example.com/bg.jpg)" in html
+    assert 'background-image: url("https://example.com/bg.jpg")' in html
     assert '<img src="https://example.com/bg.jpg"' not in html
+
+
+def test_background_url_with_spaces_is_quoted():
+    html = render(
+        "work-dir: 0 - About the Course\n\n![bg](/file/fig/nasa.jpg?)"
+    )
+    assert 'url("/file/0 - About the Course/fig/nasa.jpg?")' in html
 
 
 def test_image_sizing_and_opacity_from_alt_tokens():

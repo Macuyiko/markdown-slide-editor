@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 
@@ -110,7 +111,7 @@ def postprocess_backgrounds(html):
         parent_wrapper_bg = background_image.find_parent(class_="slide-wrapper").find(
             class_="slide-bg"
         )
-        new_style = "background-image: url({});".format(url)
+        new_style = "background-image: url({});".format(json.dumps(url))
         for alt_piece in re.compile(r"\s+").split(alt):
             percentage = extract_percentage(alt_piece)
             if percentage:
